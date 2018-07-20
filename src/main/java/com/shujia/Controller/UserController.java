@@ -1,5 +1,6 @@
 package com.shujia.Controller;
 
+import com.shujia.bean.Message;
 import com.shujia.bean.User;
 import com.shujia.service.UserService;
 import com.shujia.service.impl.UserServiceImpl;
@@ -22,34 +23,36 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(User user){
+    public Message login(User user){
 
         boolean login = userService.login(user);
 
         if (login){
-            return "登录成功";
+            //spring boot会自动将对象转换成json字符串
+            return new Message("success","登录成功");
         }else {
 
-            return "用户名密码错误";
+            return  new Message("error","用户名密码错误");
         }
     }
 
 
     @PostMapping("/register")
-    public String register(String username,String password,String newPassword){
+    public Message register(String username,String password,String newPassword){
 
         //判断两次密码是否相同
         if (!password.equals(newPassword)){
-            return "两次密码输入不一致";
+
+            return  new Message("error","两次密码输入不一致");
         }
 
         //注册
         boolean register = userService.register(new User(username, password));
 
         if (register){
-            return "注册成功";
+            return new Message("success","注册成功");
         }else {
-            return "用户已存在";
+            return new Message("error","用户名已存在");
         }
     }
 }
