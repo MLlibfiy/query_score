@@ -33,4 +33,23 @@ public class UserController {
             return "用户名密码错误";
         }
     }
+
+
+    @PostMapping("/register")
+    public String register(String username,String password,String newPassword){
+
+        //判断两次密码是否相同
+        if (!password.equals(newPassword)){
+            return "两次密码输入不一致";
+        }
+
+        //注册
+        boolean register = userService.register(new User(username, password));
+
+        if (register){
+            return "注册成功";
+        }else {
+            return "用户已存在";
+        }
+    }
 }

@@ -16,4 +16,12 @@ public interface UserService {
      */
     public boolean login(User user);
 
+
+    /**
+     * 用户注册
+     *
+     */
+
+    public boolean register(User user);
+
 }
